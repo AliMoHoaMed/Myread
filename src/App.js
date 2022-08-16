@@ -16,26 +16,21 @@ function App() {
       SetBooks(mybooks);
     };
     getmybooks();
-  }, []);
+  }, [flip]);
 
   const updatebooks = async (book, shelf) => {
     await BooksAPI.update(book, shelf);
-    const mybooks = books;
-    const index = mybooks.indexOf(book);
-    if (index >= 0) {
-      mybooks[index].shelf = shelf;
 
-      SetBooks(mybooks);
-      setflip(!flip);
-    } else {
-      book.shelf = shelf;
-      SetBooks([...books, book]);
-    }
+    setflip(!flip);
   };
 
   return (
     <Routes>
-      <Route exact path="/search" element={<Search updatee={updatebooks} />} />
+      <Route
+        exact
+        path="/search"
+        element={<Search shelfbooks={books} updatee={updatebooks} />}
+      />
       <Route exact path="/bookinformation/:id" element={<Bookinformation />} />
       <Route
         exact

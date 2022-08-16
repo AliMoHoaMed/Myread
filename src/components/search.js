@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
 import Book from "./book";
-const Search = ({ updatee }) => {
+const Search = ({ updatee, shelfbooks }) => {
   Search.prototype = {
     updatee: PropTypes.func.isRequired,
   };
@@ -21,6 +21,12 @@ const Search = ({ updatee }) => {
       const newlist = await BooksAPI.search(searchword);
 
       if (!newlist.error) {
+        newlist.map((newbook) =>
+          shelfbooks.forEach((mybook) =>
+            newbook.id === mybook.id ? (newbook.shelf = mybook.shelf) : null
+          )
+        );
+
         setbookss(newlist);
         setshow(true);
       } else {
